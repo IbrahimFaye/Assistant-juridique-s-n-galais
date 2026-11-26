@@ -6,7 +6,6 @@ In-scope     : questions dont la réponse est dans les documents.
 Out-of-scope : questions hors périmètre (info absente).
                → On évalue uniquement le taux de refus correct.
 
-Usage : python -m scripts.evaluate_rag
 """
 import json
 import time
@@ -25,63 +24,72 @@ from src.utils.logger import get_logger
 
 logger = get_logger(__name__)
 
-
-# === Modèle juge : classique (non-reasoning), rapide, fiable ===
-JUDGE_MODEL = "qwen/qwen3.8-27b"
-
+JUDGE_MODEL = "openai/gpt-oss-120b"
 
 # === Jeu de test ===
 TEST_SET = [
-    # --- Questions IN-SCOPE (réponse attendue dans les documents) ---
+    # --- IN-SCOPE : Droit du travail ---
     {
-        "question": "Qui est éligible à la bourse ?",
-        "reference": "Les bacheliers des séries S1, S3, S4, S5, T1, T2, F6 (demi-bourse), S2, S2A, G, STEG, L, les orphelins, les handicapés physiques et les malades chroniques.",
+        "question": "Quelle est la durée légale du travail au Sénégal ?",
+        "reference": "40 heures par semaine (article L.127 du Code du travail).",
         "type": "in_scope",
     },
     {
-        "question": "Quand obtient-on une bourse d'excellence ?",
-        "reference": "Les bacheliers de l'année en cours inscrits, ayant obtenu la mention Très Bien, Bien, ou étant lauréat du concours général.",
+        "question": "Quel est le préavis pour un licenciement ?",
+        "reference": "1 mois pour employés/ouvriers, 3 mois pour cadres (article L.56).",
         "type": "in_scope",
     },
     {
-        "question": "Quand débutera le paiement des bourses de septembre 2026 ?",
-        "reference": "Le 07 septembre 2026.",
+        "question": "Quelle est la durée maximale d'un CDD ?",
+        "reference": "2 ans maximum, renouvellement compris (article L.43).",
         "type": "in_scope",
     },
     {
-        "question": "Quels sont les critères pour une bourse sociale ?",
-        "reference": "Être orphelin, enfant de parents indigents, handicapé physique ou atteint de maladie chronique.",
-        "type": "in_scope",
-    },
-    {
-        "question": "Comment renouveler sa bourse ?",
-        "reference": "Le renouvellement dépend du cycle d'étude et de l'âge (moins de 30 ans), avec un redoublement autorisé.",
-        "type": "in_scope",
-    },
-    {
-        "question": "Quelles sont les séries de bac qui donnent droit à une demi-bourse ?",
-        "reference": "Les séries S1, S3, S4, S5, T1, T2 et F6.",
-        "type": "in_scope",
-    },
-    {
-        "question": "Y a-t-il une bourse pour les étudiants handicapés ?",
-        "reference": "Oui, une bourse sociale est octroyée aux handicapés physiques.",
-        "type": "in_scope",
-    },
-    {
-        "question": "Quel est le numéro de téléphone de la Direction des Bourses ?",
-        "reference": "Le 33 960 11 11.",
+        "question": "Combien de jours de congés payés par mois ?",
+        "reference": "2 jours ouvrables par mois de service effectif (article L.145).",
         "type": "in_scope",
     },
 
-    # --- Questions OUT-OF-SCOPE (info absente des documents) ---
+    # --- IN-SCOPE : Droit de la famille ---
     {
-        "question": "Quel est le montant de la bourse pour un étudiant en médecine ?",
+        "question": "Quel est l'âge minimum pour se marier ?",
+        "reference": "18 ans pour l'homme, 16 ans pour la femme (article 111 du Code de la famille).",
+        "type": "in_scope",
+    },
+    {
+        "question": "Quels sont les cas de divorce ?",
+        "reference": "Consentement mutuel, faute, ou séparation de fait depuis plus de 2 ans (articles 165 et suivants).",
+        "type": "in_scope",
+    },
+    {
+        "question": "Quelle est la période de viduité pour une veuve ?",
+        "reference": "4 mois et 10 jours (article 116 du Code de la famille).",
+        "type": "in_scope",
+    },
+    {
+        "question": "Qui hérite en cas de décès sans testament ?",
+        "reference": "Conjoint survivant, descendants, ascendants, collatéraux selon l'ordre légal (articles 570 et suivants).",
+        "type": "in_scope",
+    },
+
+    # --- OUT-OF-SCOPE : doivent être refusées ---
+    {
+        "question": "Quelle est la capitale du Sénégal ?",
         "reference": "Je ne trouve pas cette information dans mes documents.",
         "type": "out_of_scope",
     },
     {
-        "question": "Quelle est la capitale du Sénégal ?",
+        "question": "Quel est le montant de la bourse étudiante ?",
+        "reference": "Je ne trouve pas cette information dans mes documents.",
+        "type": "out_of_scope",
+    },
+    {
+        "question": "Comment obtenir un visa pour la France ?",
+        "reference": "Je ne trouve pas cette information dans mes documents.",
+        "type": "out_of_scope",
+    },
+    {
+        "question": "Qui a gagné la CAN 2024 ?",
         "reference": "Je ne trouve pas cette information dans mes documents.",
         "type": "out_of_scope",
     },
@@ -95,8 +103,12 @@ FAITHFULNESS_PROMPT = """Contexte :
 Réponse :
 {answer}
 
-La réponse est-elle supportée par le contexte ? Réponds uniquement "OUI" ou "NON"."""
+Question : La réponse est-elle supportée par le contexte ci-dessus ?
+- Si la réponse contient des informations QUI SONT dans le contexte (même reformulées), réponds "OUI".
+- Si la réponse contient des informations INVENTÉES (absentes du contexte), réponds "NON".
+- Si la réponse est un refus poli ("je n'ai pas cette information") et que le contexte ne contient effectivement pas l'info, réponds "OUI".
 
+Réponds uniquement "OUI" ou "NON"."""
 
 RELEVANCY_PROMPT = """Question : {question}
 Réponse : {answer}
@@ -110,21 +122,24 @@ REFUSAL_MARKERS = [
     "je n'ai pas cette information",
     "je ne dispose pas",
     "je n'ai pas trouvé",
-    "veuillez contacter",
-    "je te recommande de contacter",
-    "je ne peux pas répondre",
     "pas dans mes documents",
     "je n'ai pas d'information",
-]
 
+    "consultez un professionnel du droit",
+    "consultez un avocat",
+    "je ne peux pas donner de conseil juridique",
+    "cette question dépasse mon périmètre",
+    "je vous recommande de consulter",
+]
 
 # === LLM juge ===
 def get_judge_llm() -> ChatGroq:
     return ChatGroq(
-        model=JUDGE_MODEL,
+        model=JUDGE_MODEL, 
         api_key=GROQ_API_KEY,
         temperature=0,
-        max_tokens=10,
+        max_tokens=1024,         
+        reasoning_effort="low",  
         timeout=30,
         max_retries=2,
     )

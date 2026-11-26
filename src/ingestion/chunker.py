@@ -20,15 +20,14 @@ def create_splitter() -> RecursiveCharacterTextSplitter:
         chunk_overlap=CHUNK_OVERLAP,
         length_function=len,
         separators=[
-            "\n\n",       # paragraphe
-            "\n",         # ligne
-            ". ",         # phrase
-            "! ",
-            "? ",
-            "; ",
-            ", ",
-            " ",          # mot
-            "",           # caractère (dernier recours)
+            "\n\nArticle ",      
+            "\n\nTitre ",        
+            "\n\nChapitre ", 
+            "\n\nSection ",
+            "\n\n",
+            "\n",
+            ". ",
+            " ",
         ],
         keep_separator=True,
     )

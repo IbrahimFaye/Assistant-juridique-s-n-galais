@@ -10,17 +10,16 @@ os.environ["CHROMA_TELEMETRY_ENABLED"] = "False"
 from pathlib import Path
 from dotenv import load_dotenv
 
-# Charge le fichier .env à la racine du projet
 load_dotenv()
 
 # === Provider LLM ===
-LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama")  # "ollama" ou "mistral"
+LLM_PROVIDER = os.getenv("LLM_PROVIDER", "ollama") 
 # === Mistral ===
 MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY", "")
 MISTRAL_MODEL = os.getenv("MISTRAL_MODEL", "mistral-small-latest")
 # === Groq ===
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "").strip()
-GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
+GROQ_MODEL = os.getenv("GROQ_MODEL", "openai/gpt-oss-20b")
 
 # === Chemins ===
 PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -39,8 +38,8 @@ EMBEDDING_MODEL = os.getenv(
 )
 
 # === RAG ===
-CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", "800"))
-CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "150"))
+CHUNK_SIZE = int(os.getenv("CHUNK_SIZE", "1000"))
+CHUNK_OVERLAP = int(os.getenv("CHUNK_OVERLAP", "200"))
 RETRIEVER_TOP_K = int(os.getenv("RETRIEVER_TOP_K", "5"))
 
 # === Création des dossiers si absents ===

@@ -1,6 +1,5 @@
 """
 Script principal d'ingestion.
-Usage : python -m src.ingestion.run_ingestion
 """
 import shutil
 from src.utils.config import VECTORSTORE_DIR

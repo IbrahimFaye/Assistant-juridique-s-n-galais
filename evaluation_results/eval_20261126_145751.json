@@ -1,0 +1,151 @@
+{
+  "timestamp": "20261126_145751",
+  "summary": {
+    "in_scope": {
+      "count": 8,
+      "faithfulness": 0.75,
+      "answer_relevancy": 0.625,
+      "context_precision": 0.725,
+      "context_recall": 0.6389
+    },
+    "out_of_scope": {
+      "count": 4,
+      "correct_refusal_rate": 1.0
+    },
+    "avg_latency_s": 8.1
+  },
+  "results": [
+    {
+      "type": "in_scope",
+      "question": "Quelle est la durée légale du travail au Sénégal ?",
+      "answer": "Je n'ai pas cette information dans mes documents. Veuillez consulter un professionnel du droit ou les textes officiels.",
+      "reference": "40 heures par semaine (article L.127 du Code du travail).",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 0.0,
+      "context_recall": 0.439,
+      "latency_s": 17.24
+    },
+    {
+      "type": "in_scope",
+      "question": "Quel est le préavis pour un licenciement ?",
+      "answer": "Selon l'article 149 du Code du travail, le licenciement doit être notifié par écrit et la lettre de licenciement doit mentionner la durée du préavis, sauf en cas de faute lourde. Le texte ne fixe pas de durée précise ; elle est déterminée par la convention collective ou les dispositions contractuelles applicables. Pour une situation personnelle, consultez un avocat.",
+      "reference": "1 mois pour employés/ouvriers, 3 mois pour cadres (article L.56).",
+      "faithfulness": 0.0,
+      "answer_relevancy": 1.0,
+      "context_precision": 0.8,
+      "context_recall": 0.67,
+      "latency_s": 5.77
+    },
+    {
+      "type": "in_scope",
+      "question": "Quelle est la durée maximale d'un CDD ?",
+      "answer": "Selon l'article 100 du Code du travail, la durée maximale d’un contrat à durée déterminée (CDD) est de deux (2) ans. Il ne peut faire l’objet que d’un seul renouvellement ou d’une seule prolongation, et la durée cumulée ne peut excéder quatre (4) ans.",
+      "reference": "2 ans maximum, renouvellement compris (article L.43).",
+      "faithfulness": 1.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 0.8,
+      "context_recall": 0.67,
+      "latency_s": 6.39
+    },
+    {
+      "type": "in_scope",
+      "question": "Combien de jours de congés payés par mois ?",
+      "answer": "Je n'ai pas cette information dans mes documents. Veuillez consulter un professionnel du droit ou les textes officiels.",
+      "reference": "2 jours ouvrables par mois de service effectif (article L.145).",
+      "faithfulness": 0.0,
+      "answer_relevancy": 0.0,
+      "context_precision": 1.0,
+      "context_recall": 0.689,
+      "latency_s": 8.0
+    },
+    {
+      "type": "in_scope",
+      "question": "Quel est l'âge minimum pour se marier ?",
+      "answer": "Selon l'article 112 du Code de la famille, l’âge minimum pour se marier est de 18 ans pour l’homme et de 16 ans pour la femme.  \nPour une situation personnelle, consultez un avocat.",
+      "reference": "18 ans pour l'homme, 16 ans pour la femme (article 111 du Code de la famille).",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_precision": 1.0,
+      "context_recall": 0.72,
+      "latency_s": 6.87
+    },
+    {
+      "type": "in_scope",
+      "question": "Quels sont les cas de divorce ?",
+      "answer": "Les causes de divorce prévues par le Code de la famille sénégalais sont énumérées à l’article 166 : absence déclarée d’un des époux, adultère, condamnation à une peine d’infamie, et d’autres situations spécifiques mentionnées dans le même article.  \nPour une situation personnelle, consultez un avocat.",
+      "reference": "Consentement mutuel, faute, ou séparation de fait depuis plus de 2 ans (articles 165 et suivants).",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_precision": 1.0,
+      "context_recall": 0.663,
+      "latency_s": 6.85
+    },
+    {
+      "type": "in_scope",
+      "question": "Quelle est la période de viduité pour une veuve ?",
+      "answer": "Selon le Code de la famille sénégalais, la période de viduité pour une veuve est de **300 jours** à compter de la date de décès du conjoint.",
+      "reference": "4 mois et 10 jours (article 116 du Code de la famille).",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_precision": 0.2,
+      "context_recall": 0.556,
+      "latency_s": 6.56
+    },
+    {
+      "type": "in_scope",
+      "question": "Qui hérite en cas de décès sans testament ?",
+      "answer": "En l’absence de testament, la succession se répartit entre les héritiers légaux prévus par le Code de la famille, à savoir le conjoint survivant, les parents, les enfants, puis, à défaut, les ascendants ou descendants jusqu’au douzième degré.  \nSelon l’article 645 du Code de la famille, la masse à partager est distribuée entre ces héritiers selon la quotité disponible.  \nPour une situation personnelle, consultez un avocat.",
+      "reference": "Conjoint survivant, descendants, ascendants, collatéraux selon l'ordre légal (articles 570 et suivants).",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_precision": 1.0,
+      "context_recall": 0.704,
+      "latency_s": 7.53
+    },
+    {
+      "type": "out_of_scope",
+      "question": "Quelle est la capitale du Sénégal ?",
+      "answer": "Je n'ai pas cette information dans mes documents. Veuillez consulter un professionnel du droit ou les textes officiels.",
+      "reference": "Je ne trouve pas cette information dans mes documents.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_precision": 0.0,
+      "context_recall": 0.236,
+      "latency_s": 6.58
+    },
+    {
+      "type": "out_of_scope",
+      "question": "Quel est le montant de la bourse étudiante ?",
+      "answer": "Je n'ai pas cette information dans mes documents. Veuillez consulter un professionnel du droit ou les textes officiels.",
+      "reference": "Je ne trouve pas cette information dans mes documents.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_precision": 0.0,
+      "context_recall": 0.254,
+      "latency_s": 6.15
+    },
+    {
+      "type": "out_of_scope",
+      "question": "Comment obtenir un visa pour la France ?",
+      "answer": "Je n'ai pas cette information dans mes documents. Veuillez consulter un professionnel du droit ou les textes officiels.",
+      "reference": "Je ne trouve pas cette information dans mes documents.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_precision": 0.0,
+      "context_recall": 0.211,
+      "latency_s": 11.55
+    },
+    {
+      "type": "out_of_scope",
+      "question": "Qui a gagné la CAN 2024 ?",
+      "answer": "Je n'ai pas cette information dans mes documents. Veuillez consulter un professionnel du droit ou les textes officiels.",
+      "reference": "Je ne trouve pas cette information dans mes documents.",
+      "faithfulness": 1.0,
+      "answer_relevancy": 1.0,
+      "context_precision": 0.0,
+      "context_recall": 0.323,
+      "latency_s": 7.74
+    }
+  ]
+}

@@ -59,8 +59,9 @@ def _create_groq_llm() -> BaseChatModel:
         model=GROQ_MODEL,
         api_key=GROQ_API_KEY,
         temperature=0.2,
-        max_tokens=800,
+        max_tokens=2080,
         max_retries=2,
+        reasoning_effort="low",
     )
 
 

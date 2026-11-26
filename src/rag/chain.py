@@ -14,7 +14,7 @@ from src.utils.logger import get_logger
 logger = get_logger(__name__)
 
 # Nombre de chunks récupérés AVANT re-ranking (large)
-RETRIEVER_FETCH_K = 8
+RETRIEVER_FETCH_K = 12
 # Nombre de chunks gardés APRÈS re-ranking (précis)
 RERANK_TOP_N = RETRIEVER_TOP_K  # = 5
 
@@ -67,7 +67,15 @@ def answer_question(question: str, k: int = RETRIEVER_TOP_K) -> Dict[str, Any]:
         "question": question,
     })
 
-    answer = response.content
+    answer = response.content.strip()
+
+    # ✅ Garde-fou : réponse vide
+    if not answer:
+        logger.warning("  ⚠️ Réponse vide du LLM, fallback")
+        answer = (
+            "Je n'ai pas pu générer de réponse à partir des documents. "
+            "Veuillez reformuler votre question ou consulter un professionnel du droit."
+        )
     logger.info(f"  → Réponse générée ({len(answer)} caractères)")
 
     # 5. Sources uniques

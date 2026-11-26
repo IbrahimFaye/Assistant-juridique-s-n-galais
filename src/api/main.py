@@ -1,6 +1,5 @@
 """
 Point d'entrée FastAPI.
-Lance avec : uvicorn src.api.main:app --reload
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -11,8 +10,8 @@ from src.utils.logger import get_logger
 logger = get_logger(__name__)
 
 app = FastAPI(
-    title="Chatbot Bourses Sénégal",
-    description="API RAG pour répondre aux questions des étudiants boursiers",
+    title="Chatbot Assitant juridique",
+    description="API RAG pour répondre aux questions des sénégalais",
     version="0.1.0",
 )
 
@@ -31,7 +30,7 @@ app.include_router(router, prefix="/api/v1", tags=["RAG"])
 @app.get("/")
 async def root():
     return {
-        "message": "Chatbot Bourses Sénégal API",
+        "message": "Chatbot Sénégal API",
         "docs": "/docs",
         "health": "/api/v1/health",
     }

@@ -16,7 +16,7 @@ COLLECTION_NAME = "bourses_senegal"
 
 def get_embedding_model() -> HuggingFaceEmbeddings:
     """
-    Charge le modèle d'embeddings (téléchargé au premier lancement).
+    Charge le modèle d'embeddings.
     """
     logger.info(f"Chargement du modèle d'embeddings : {EMBEDDING_MODEL}")
     

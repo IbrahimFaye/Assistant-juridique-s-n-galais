@@ -1,6 +1,5 @@
 """
 Interface chat Streamlit.
-Lance avec : streamlit run src/ui/app.py
 """
 import time
 import requests
@@ -17,7 +16,7 @@ def stream_char_by_char(text: str, delay: float = 0.01):
 
 # === Configuration de la page ===
 st.set_page_config(
-    page_title="Assistant Bourses Sénégal",
+    page_title="Assistant",
     page_icon="🎓",
     layout="centered",
     initial_sidebar_state="expanded",

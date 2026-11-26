@@ -38,7 +38,7 @@ async def health():
 @router.post("/ask", response_model=AskResponse)
 async def ask(request: AskRequest):
     """
-    Répond à une question d'étudiant.
+    Répond à une question.
     """
     logger.info(f"📨 Nouvelle question : {request.question[:80]}")
     start = time.time()
